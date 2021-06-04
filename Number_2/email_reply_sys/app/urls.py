@@ -9,4 +9,5 @@ urlpatterns = [
     path('view-user/', views.view_user, name='view_user'),
     path('delete-user/<str:pk>/', views.delete_user, name='delete_user'),
     path('pre-fill', views.pre_fill, name='pre_fill'),
+    path('fail/', views.send_fail, name='fail'),
 ]

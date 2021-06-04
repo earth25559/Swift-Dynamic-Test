@@ -12,15 +12,12 @@ from django.template.loader import render_to_string
 
 def fill_info(request):
     form = CustomerForm()
-    customer = Customer.objects.all()
     if request.method == "POST":
         form = CustomerForm(request.POST)
         if form.is_valid():
             form.save()
             return redirect('/view-user')
     context = {'form': form}
-    print(form)
-
     return render(request, 'email_sys/user_email_form.html', context)
 
 
@@ -50,15 +47,13 @@ def index(request):
     customer = Customer.objects.all()
     form = CustomerForm()
     if request.method == "POST":
-        print(request.POST)
-        email = request.POST.get('email')
         name = request.POST.getlist('name')
+        if name == []:
+            return redirect('/fail')
         subject = request.POST.get('subject')
         message = request.POST.get('message')
-        template = render_to_string(
-            'email_sys/email_template.html', {'name': 'Earth'})
+
         list_of_cust = Customer.objects.filter(id__in=name)
-        print(list_of_cust)
         for cus in list_of_cust:
             email = EmailMessage(
                 subject,
@@ -66,8 +61,6 @@ def index(request):
                 settings.EMAIL_HOST_USER,
                 [cus.email],
             )
-            print(cus.name)
-            print(cus.email)
             email.fail_silently = False
             email.send()
     # if request.method == "POST":
@@ -81,6 +74,13 @@ def send_mail(request):
     form = CustomerForm()
     context = {"form": form}
     return render(request, 'email_sys/email_send.html', context)
+
+
+def send_fail(request):
+    customer = Customer.objects.all()
+    form = CustomerForm()
+    context = {"form": form}
+    return render(request, 'email_sys/send_fail.html', context)
 
 
 def pre_fill(request):
