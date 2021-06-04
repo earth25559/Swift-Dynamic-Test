@@ -1,0 +1,56 @@
+{% extends 'email_sys/main.html'%}
+{%block content%}
+<section>
+
+
+  <script>
+    $(document).ready(function()
+    {
+      $("#cust_id").select2({
+        placeholder:'Select User Email... ',
+        closeOnSelect:false,
+      });
+    })
+  </script>
+    <div class="container2">
+      <h3>Send Email</h3>
+      <div>
+      <a id = "button" style = "padding-right: 20px;" id= "add-link" href="{% url 'fill_info' %}">Add User</a>
+      <a id = "button" href="{% url 'view_user' %}">View User</a>
+    </div>
+
+  </div>
+    <div class="container">
+      <form action="/" method="POST" id="cust-form">
+        {% csrf_token %}
+        <div class="form-group">
+          <label for="Name">User Email</label>
+          <select name="name", id = "cust_id" multiple>
+            {% for cus in customer %}
+                <option value="{{ cus.id }}">{{ cus.email }}</option>
+            {% endfor %}
+            </select>
+        </div>
+
+        <!-- <div class="form-group">
+            <label for="email">Email</label>
+            <input type="text" id="email" name="email">
+          </div> -->
+
+  
+        <div class="form-group">
+            <label for="subject">Subject</label>
+            <input type="text" id="subject" name="subject">
+          </div>
+
+        <div class="form-group">
+          <label for="message">Message Body</label>
+          <textarea name="message" id="message" cols="30" rows="10">{{template}}</textarea>
+        </div>
+        <button type="button" id = "add-link2"><a href="{% url 'pre_fill' %}">Fill Message</a></button>
+        <button type="submit" id = "add-link2">Submit</button>
+      </form>
+    </div>
+    <div id="status"></div>
+  </section>
+  {% endblock content %}

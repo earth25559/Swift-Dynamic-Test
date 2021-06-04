@@ -1,0 +1,18 @@
+{% extends 'email_sys/main.html'%}
+{%block content%}
+<section>
+    <div class="container2">
+        <h3>Send Mail Successfully!</h3>
+
+</div>
+<div class="container">
+    <div class="form-group">
+        {% csrf_token %}
+        <a href="{% url 'home' %}">&#8592; Go back</a>
+        
+</div>
+</div>
+
+
+</section>
+{%endblock content %}

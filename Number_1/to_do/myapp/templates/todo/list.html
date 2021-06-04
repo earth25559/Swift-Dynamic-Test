@@ -1,0 +1,72 @@
+{% extends 'todo/main.html'%}
+{%block content%}
+<div class = "header-bar">
+    <div>
+        <h1 style="color: #fafafa;">To Do List</h1>
+        <h3 style="margin:0; color: #fafafa;">You have <b>{{count}}</b> incomplete task{{ count|pluralize:"s" }}</h3>
+    </div>
+</div>
+
+
+<hr>
+<div id= "search-add-wrapper">
+    <form method='GET' style="margin-top: 20px; display: flex;">
+        <input type='text' name = 'search-area' value="{{search_input}}" placeholder="
+        Search Task..." >
+        <input class= "button" type = "submit" value ='Search'>
+    </form>
+    <a id="add-link" href="{% url 'create_task' %}">&#x2b;</a>
+</div>
+
+
+
+
+
+<div class="task-item-wrapper">
+    {% for task in tasks %}
+    <div class= "task-wrapper">
+
+        {% if task.complete == True %}
+        <div class="task-title">
+            <div class ="task-complete-icon"></div>
+            <i><strike><a href="{% url 'update_task' task.id %}">{{task}}</a></strike></i>
+            
+        </div>
+        <div class="task-title2">
+            <a class= "delete-link" href="{% url 'delete_task' task.id %}">&#215;</a>
+        </div>
+        {% else %}
+        <div class="task-title">
+            <div class ="task-incomplete-icon"></div>
+            <a href="{% url 'update_task' task.id %}">{{task}}</a>
+        </div>
+        <div class="task-title2">
+            <!-- <form method="POST" action="/" style="margin-left: 20px;">
+                {% csrf_token %}
+                {{form.complete}}
+                <input onChange="this.form.submit()" type="checkbox" name="complete" value="complete">
+            </form> -->
+            {% load message_tags %}
+            {% if task.due_date|hours_ago:24 %}
+            <span><b>Due:</b> Today</span>
+            <a class= "delete-link" href="{% url 'delete_task' task.id %}">&#215;</a>
+            {% elif task.due_date|hours_ago:48 %}
+            <span><b>Due:</b> Tomorrow </span>
+            <a class= "delete-link" href="{% url 'delete_task' task.id %}">&#215;</a>
+            {% else %}
+            <span><b>Due:</b> {{ task.due_date | date }} </span>
+            <a class= "delete-link" href="{% url 'delete_task' task.id %}">&#215;</a>
+            {% endif %}
+
+        </div>
+        
+        {% endif %}
+
+    </div>
+{% endfor %}
+</div>
+
+
+
+
+{%endblock content %}

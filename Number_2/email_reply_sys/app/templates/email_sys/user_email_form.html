@@ -1,0 +1,21 @@
+{% extends 'email_sys/main.html'%}
+{%block content%}
+<section>
+    <div class="container2">
+        <h3>Add User</h3>
+        <a href="{% url 'home' %}">&#8592; Go back</a>
+    </div>
+    <div class="container">
+        <form method="POST" id="cust-form">
+            {% csrf_token %}
+            <div class="form-group">
+                {{form}}
+                <button type="submit">Submit</button>
+            </div>
+        </form>
+        
+    </div>
+</section>
+
+{% endblock content %}
+

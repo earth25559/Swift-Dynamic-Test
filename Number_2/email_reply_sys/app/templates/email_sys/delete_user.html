@@ -1,0 +1,24 @@
+{% extends 'email_sys/main.html'%}
+{%block content%}
+<section>
+    <div class="container2">
+        <h3>Delete User</h3>
+        <a href="{% url 'home' %}">&#8592; Go back</a>
+    </div>
+    <div class="container">
+    <div class="form-group">
+    <h3>Are you sure you want to delete "{{customer}}" from the list?</h3>
+    <form method= "POST" action="">
+        {% csrf_token %}
+        <button type="submit">Confirm</button>
+        
+    </form>
+</div>
+</div>
+
+</section>
+
+
+
+
+{%endblock content %}

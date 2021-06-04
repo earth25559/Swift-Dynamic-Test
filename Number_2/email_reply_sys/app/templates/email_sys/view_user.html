@@ -1,0 +1,22 @@
+{% extends 'email_sys/main.html'%}
+{%block content%}
+
+<section>
+    <div class="container2">
+        <h3>View User</h3>
+        <a href="{% url 'home' %}">&#8592; Go back</a>
+    </div>
+    {% for cus in customer %}
+    <div class="container">
+            <strong style="float:left">{{cus.name}}<br/> Email:{{cus.email}}</strong>
+            <!-- <strong style="float:center">Email:{{cus.email}} </strong> -->
+            <a style="float:right" class= "delete-link" href="{% url 'delete_user' cus.id %}">&#215;</a>
+            <!-- <a class= "delete-link" href="{% url 'delete_user' cus.id %}">&#215;</a> -->
+            <!-- <strong>{{cus.name}}  Email:{{cus.email}}</strong> -->
+    </div>
+    {% endfor %}
+</section>
+    
+
+
+{% endblock content %}
